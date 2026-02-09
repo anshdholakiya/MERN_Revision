@@ -6,7 +6,8 @@ const {
   getUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  signup
 } = require("../controllers/userController");
 
 router.post("/", createUser);
@@ -14,5 +15,6 @@ router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
+router.post("/signup",signup);  //! post reuest in signup
 
 module.exports = router;

@@ -1,17 +1,50 @@
 const User = require("../model/User");
+const bcrypt = require("bcryptjs");
+
+exports.signup = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+
+    //* if usrer aleredy there
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+
+    //save user
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword
+    });
+
+    res.status(201).json({ message: "User created" });
+  } catch {
+    res.status(500).json({ message: "Server Error" })
+  }
+};
+
 
 exports.createUser = async (req, res) => {
-    try {
-        const { name, email } = req.body;
-        if (!name || !email) {
-            return res.status(400).json({ message: "name and email is not there" });
-        }
-
-        const user = await User.create({ name, email });
-        res.status(201).json(user);
-    } catch (err) {
-        res.status(500).json({ message: "Server error" });
+  try {
+    const { name, email } = req.body;
+    if (!name || !email) {
+      return res.status(400).json({ message: "name and email is not there" });
     }
+
+    const user = await User.create({ name, email });
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 exports.getUsers = async (req, res) => {
@@ -54,3 +87,5 @@ exports.deleteUser = async (req, res) => {
     res.status(400).json({ message: "Delete failed" });
   }
 };
+
+
