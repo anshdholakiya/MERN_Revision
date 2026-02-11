@@ -6,23 +6,31 @@ function First() {
         { id: 2, name: "Ravi", marks: 88 },
     ];
 
-    
+
 
     return (
         <>
             <div>hello</div>
             <ul>
                 {n.map(num => (
-                    <li>{num}</li>
+                    <li key={num}>{num}</li>
                 ))}
-            </ul> 
+            </ul>
             <div>
+                 //! here key is necessary for react to access it uniquly
                 {students.map(student => (
-                    <div key={student.id}>
+                    <div key={student.id}>  
                         <h3>{student.name}</h3>
                         <p>{student.marks}</p>
                     </div>
                 ))}
+
+                {/* {students.map(student => (
+                    <div>
+                        <h3>{student.name}</h3>
+                    </div>
+                ))} */}
+
 
             </div>
         </>
