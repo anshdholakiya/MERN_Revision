@@ -56,5 +56,7 @@ const obj = {
 obj.Myfunction();
 obj.arrowFunction();
 
+
+
 // alert("hi"); 
 // prompt("hi ansh");
